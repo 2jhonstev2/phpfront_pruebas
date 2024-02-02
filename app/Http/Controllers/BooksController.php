@@ -14,7 +14,8 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        $books = Books::all();
+        return view('crud', compact('books'));
     }
 
     /**
