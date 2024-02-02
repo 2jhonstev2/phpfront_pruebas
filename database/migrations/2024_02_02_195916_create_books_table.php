@@ -16,9 +16,12 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('author_id')->constrained('authors');
-            $table->foreignId('editorial_id')->constrained('editorials');
-            $table->foreignId('category_id')->constrained('categories');
+            $table->unsignedBigInteger('author_id')->nullable();
+            $table->foreign('author_id')->references('id')->on('authors')->onDelete('set null');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->unsignedBigInteger('editorial_id')->nullable();
+            $table->foreign('editorial_id')->references('id')->on('editorials')->onDelete('set null');
             $table->date('year_publication');
             $table->timestamps();
         });
