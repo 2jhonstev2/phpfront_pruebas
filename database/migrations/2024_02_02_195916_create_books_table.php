@@ -16,9 +16,9 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('author_id');
-            $table->string('editorial_id');
-            $table->string('categoria_id');
+            $table->foreignId('author_id')->constrained('authors');
+            $table->foreignId('editorial_id')->constrained('editorials');
+            $table->foreignId('category_id')->constrained('categories');
             $table->date('year_publication');
             $table->timestamps();
         });
