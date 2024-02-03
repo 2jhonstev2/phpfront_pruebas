@@ -20,7 +20,7 @@ class BooksFactory extends Factory
         $category = Categories::all()->random();
         $editorial = Editorials::all()->random();
         return [
-            'title' => $this->faker->text(),
+            'title' => $this->faker->sentence(2),
             'author_id' => $author->id,
             'category_id' => $category->id,
             'editorial_id' => $editorial->id,

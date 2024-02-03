@@ -14,7 +14,7 @@ class EditorialsFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->randomElement(['Norma', 'IPEGA', 'Otro Editorial']),
+            'name' => $this->faker->randomElement(['Bancroft Press', 'Regal House Publishing', 'Koehler Books','Shambhala Publications']),
             'location' => $this->faker->randomElement(['Brazil', 'Roma', 'Italia']),
         ];
     }

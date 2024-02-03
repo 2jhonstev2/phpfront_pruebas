@@ -15,3 +15,11 @@ use App\Http\Controllers\BooksController;
 */
 
 Route::get('/', [BooksController::class , 'index']);
+
+Route::get('/getBook/{id}', [BooksController::class , 'getBookId']);
+
+Route::put('/editItem/{id}', [BooksController::class , 'update']);
+
+Route::post('/storebooks', BooksController::class .'@store')->name('books.store');
+
+Route::delete('/deletebook/{id}', BooksController::class .'@destroy')->name('books.destroy');

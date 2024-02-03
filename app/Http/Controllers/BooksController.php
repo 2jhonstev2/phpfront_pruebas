@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Books;
+
+use App\Models\Authors;
+use App\Models\Categories;
+use App\Models\Editorials;
+
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -14,8 +19,13 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Books::all();
-        return view('crud', compact('books'));
+        $books = Books::with(['authors','categories','editorials'])->get();
+
+        $authors    = Authors::all();
+        $categories = Categories::all();
+        $editorials = Editorials::all();
+
+        return view('crud', compact('books','authors','categories','editorials'));
     }
 
     /**
@@ -36,7 +46,8 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Books::create($request->all());
+        return redirect('/');
     }
 
     /**
@@ -56,9 +67,8 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function edit(Books $books)
+    public function edit()
     {
-        //
     }
 
     /**
@@ -68,9 +78,16 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Books $books)
+    public function update(Request $request, $id)
     {
-        //
+        $item = Books::find($id);
+        $item->title = $request->input('title');
+        $item->author_id = $request->input('author');
+        $item->category_id = $request->input('category');
+        $item->editorial_id = $request->input('editorial');
+        $item->year_publication = $request->input('year_publication');
+        $item->save();
+        return redirect('/');
     }
 
     /**
@@ -79,8 +96,15 @@ class BooksController extends Controller
      * @param  \App\Models\Books  $books
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Books $books)
+    public function destroy($id)
     {
-        //
+        $book = Books::find($id);
+        $book->delete();
+        return redirect('/');
+    }
+
+    public function getBookId($id){
+        $book = Books::where('id',$id)->first();
+        return response()->json(json_encode($book), 200);
     }
 }
